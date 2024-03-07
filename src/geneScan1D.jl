@@ -20,7 +20,7 @@ function marker1Scan(q,kmin,cross,Nullpar::Approx,λg,λc,Y1,Xnul_t,X1,Z1;ρ=0.0
             B0=hcat(Nullpar.B,zeros(Float64,q,cross-1))
 
           lod=@distributed (vcat) for j=1:nmar
-                XX= vcat(Xnul_t, @view X1[j,2:end,:])
+                XX= vcat(Xnul_t, X1[j,2:end,:])
                 B0,τ2,Σ,loglik0 =ecmLMM(Y1,XX,Z1,B0,Nullpar.τ2,Nullpar.Σ,λg,λc;tol=tol0)
                   lod0= (loglik0-Nullpar.loglik)/log(10)
                 est1=ecmNestrvAG(lod0,kmin,Y1,XX,Z1,B0,τ2,Σ,λg,λc;ρ=ρ,tol=tol1)
